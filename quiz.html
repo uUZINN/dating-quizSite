@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #talk_wrap {
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .talk__humanwrap {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .talk__question {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .talk__choice label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .talk__choiceGood,
+        .talk__choiceBad {
+            font-weight: bold;
+            color: green;
+            margin-top: 10px;
+            display: none;
+        }
+
+        .talk__choice input:checked+span {
+            color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <main id="main">
+        <div class="talk_human"></div>
+        <div class="text_box"></div>
+    </main>
+    <script>
+        const textWrap = document.querySelector("#main");
+        const textNext = document.querySelector(".text_box");
+
+        // 변수 설정
+        let textIndex = 0;     // 현재 대화하고 있는 문장 인덱스
+        let textInfo = [];      // 문장 정보들 
+
+        // 인물 설정 
+        const Human = [
+            {
+                name: "강인혜",
+                age: "25",
+                job: "student",
+            },
+        ]
+
+        // 선택한 답변 저장
+        let selectedAnswers = [];
+
+        fetch('inhae.json')
+            .then(response => response.json())
+            .then(data => {
+                textInfo = data.map((data, index) => {
+                    const textInfo = {
+                        runText: data.runText,
+                        Question: data.Question,
+                        Choice: data.Choice,
+                        Answer: data.Answer,
+                        choiceGood: data.choiceGood,
+                        choiceBad: data.choiceBad,
+                    }
+                    return textInfo;
+                })
+                updateText(textIndex); // 처음 대화를 표시하기 위해 호출
+            })
+
+        // 문제 출력
+        const updateText = (index) => {
+            const data = textInfo[index]; // 현재 인덱스의 대화 정보 가져오기
+
+            // 대화 출력
+            const textArray = [];
+            textArray.push(`
+                <div id="talk_wrap">
+                    <div class="talk__humanwrap">
+                        <div class="talk__main">
+                            <div class="talk__run">${data.runText}</div>
+                            <div class="talk__question">${data.Question}</div>
+                            <div class="talk__choice">
+                                <label for="choice01-${index}">
+                                    <input type="radio" id="choice01-${index}" name="choice-${index}" value="1">
+                                    <span>${data.Choice[0]}</span>
+                                </label>
+                                <label for="choice02-${index}">
+                                    <input type="radio" id="choice02-${index}" name="choice-${index}" value="2">
+                                    <span>${data.Choice[1]}</span>
+                                </label>
+                            </div>
+                            <div class="talk__choiceGood none">${data.choiceGood}</div>
+                            <div class="talk__choiceBad none">${data.choiceBad}</div>
+                        </div>
+                    </div>
+                </div>
+            `);
+
+            textWrap.innerHTML = textArray.join("");
+
+            // 라디오 버튼 클릭 이벤트 추가
+            const radioButtons = document.querySelectorAll(`input[name="choice-${index}"]`);
+            radioButtons.forEach(radioButton => {
+                radioButton.addEventListener("click", () => {
+                    selectedAnswers[index] = radioButton.value;
+                    textNext.disabled = false;
+
+                    if (selectedAnswers[index] == data.Answer) {
+                        choiceGood.classList.remove("none");
+                    } else {
+                    }
+                });
+            });
+        }
+        
+
+        document.addEventListener("DOMContentLoaded", () => {
+            updateText(textIndex);
+        });
+    </script>
+</body>
+
+</html>
