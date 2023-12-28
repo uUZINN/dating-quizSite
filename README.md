@@ -13,3 +13,46 @@
 과연 당신의 데이트 점수는?!!<br>
 <br>
 
+## Page-list
+1. 메인페이지<br>
+   - 웹툰 로고 사용<br>
+   - 등장인물 선택 (인혜, 연오, 우빈, 수지)<br>
+   - 등장인물 클릭 시, 프로필 팝업<br>
+     1) 공략 정보 : 데이트 제목, 난이도, tip, 시작하기 버튼<br>
+2. 서브페이지<br>
+   - 등장인물 별 json 파일 제작<br>
+     1) https://uuzinn.github.io/dating-quizSite/json/Sooji.json<br>
+     2) https://uuzinn.github.io/dating-quizSite/json/Ubin.json<br>
+     3) https://uuzinn.github.io/dating-quizSite/json/inhae.json<br>
+     4) https://uuzinn.github.io/dating-quizSite/json/yeano.json<br>
+   - 데이트 상황에 맞는 각 배경 이미지 사용<br>
+   - 텍스트 박스 혹은 Enter 클릭 시, 스토리 전개<br>
+   - 스토리 전개 중, 캐릭터 성격에 맞추어 적절한 대답 선택<br>
+   - 정답 클릭 : 점수 상승 / 오답 클릭 : 점수 하락<br>
+   - 스토리 엔딩 : 최종 점수 공개, 등장인물과의 관계성 공개<br>
+   
+## JAVASCRIPT
+1.문제 가져오기
+```
+        const fetchQuiz = () => {
+            fetch("https://raw.githubusercontent.com/jeongsaeyeong/quizproject01/main/Sooji.json")
+                .then((res) => res.json())
+                .then((items) => {
+                    quizInfo = items.map((item, index) => {
+                        const formattedQuiz = {
+                            runText: item.runText,
+                            Question: item.Question,
+                            choiceBad: item.choiceBad,
+                            choiceGood: item.choiceGood,
+                            Choice: item.Choice, // 선택지 배열
+                            Answer: item.Answer, // 정답
+                            Feel: item.feel, // 표정
+                            Background: item.backgrond
+                        };
+                        return formattedQuiz;
+                    });
+                    console.log(quizInfo.length);
+                    updataQuiz();
+                });
+        };
+```
