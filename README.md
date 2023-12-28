@@ -34,120 +34,120 @@
 ## JAVASCRIPT
 1.문제 가져오기
 ```
-        const fetchQuiz = () => {
-            fetch("https://raw.githubusercontent.com/jeongsaeyeong/quizproject01/main/Sooji.json")
-                .then((res) => res.json())
-                .then((items) => {
-                    quizInfo = items.map((item, index) => {
-                        const formattedQuiz = {
-                            runText: item.runText,
-                            Question: item.Question,
-                            choiceBad: item.choiceBad,
-                            choiceGood: item.choiceGood,
-                            Choice: item.Choice, // 선택지 배열
-                            Answer: item.Answer, // 정답
-                            Feel: item.feel, // 표정
-                            Background: item.backgrond
-                        };
-                        return formattedQuiz;
-                    });
-                    console.log(quizInfo.length);
-                    updataQuiz();
-                });
-        };
+const fetchQuiz = () => {
+    fetch("https://raw.githubusercontent.com/jeongsaeyeong/quizproject01/main/Sooji.json")
+        .then((res) => res.json())
+        .then((items) => {
+            quizInfo = items.map((item, index) => {
+                const formattedQuiz = {
+                    runText: item.runText,
+                    Question: item.Question,
+                    choiceBad: item.choiceBad,
+                    choiceGood: item.choiceGood,
+                    Choice: item.Choice, // 선택지 배열
+                    Answer: item.Answer, // 정답
+                    Feel: item.feel, // 표정
+                    Background: item.backgrond
+                };
+                return formattedQuiz;
+            });
+            console.log(quizInfo.length);
+            updataQuiz();
+        });
+};
 ```
 2. 클릭 이벤트 핸들러
 ```
 const introBoxClickHandler = () => {
-            if (isRunTextMode) {
-                currentRunTextIndex++; // 다음 runText 배열 요소 인덱스로 이동
-                // 만약 현재 배열 요소를 모두 표시했다면 Question 모드로 전환
-                if (currentRunTextIndex >= quizInfo[currentIndex].runText.length) {
-                    currentRunTextIndex = 0; // 배열 요소 인덱스 초기화
-                    isRunTextMode = false; // Question 모드로 전환
-                }
-            } else {
-                currentIndex++; // 다음 퀴즈로 이동
-                // 만약 마지막 퀴즈를 넘어가면 초기화
-                if (currentIndex >= 39) {
-                    endingtext();
-                    textSTop();
-                }
-                isRunTextMode = true; // runText 모드로 전환
-                console.log("current" + currentIndex)
-            }
-            // 퀴즈 업데이트
-            updataQuiz();
-        };
-        // intro_box 클릭 이벤트를 등록
-        introWrap.addEventListener("click", introBoxClickHandler);
+    if (isRunTextMode) {
+        currentRunTextIndex++; // 다음 runText 배열 요소 인덱스로 이동
+        // 만약 현재 배열 요소를 모두 표시했다면 Question 모드로 전환
+        if (currentRunTextIndex >= quizInfo[currentIndex].runText.length) {
+            currentRunTextIndex = 0; // 배열 요소 인덱스 초기화
+            isRunTextMode = false; // Question 모드로 전환
+        }
+    } else {
+        currentIndex++; // 다음 퀴즈로 이동
+        // 만약 마지막 퀴즈를 넘어가면 초기화
+        if (currentIndex >= 39) {
+            endingtext();
+            textSTop();
+        }
+        isRunTextMode = true; // runText 모드로 전환
+        console.log("current" + currentIndex)
+    }
+    // 퀴즈 업데이트
+    updataQuiz();
+};
+// intro_box 클릭 이벤트를 등록
+introWrap.addEventListener("click", introBoxClickHandler);
 ```
 3. 문제 출력
 ```
-         const updataQuiz = () => {
-            const quiz = quizInfo[currentIndex];
-            const Background = quiz.Background;
-            if (quiz) {
-                let content = '';
-                content = `
-                <div class="quiz__background">
-                    <div class="background-image" style="background-image: url('${quiz.Background}')"></div>
+const updataQuiz = () => {
+    const quiz = quizInfo[currentIndex];
+    const Background = quiz.Background;
+    if (quiz) {
+        let content = '';
+        content = `
+        <div class="quiz__background">
+            <div class="background-image" style="background-image: url('${quiz.Background}')"></div>
+        </div>
+        `;
+        const quizHTML = `${content}`;
+        quizWrap.innerHTML = quizHTML;
+    }
+    if (quiz) {
+        let content = '';
+        if (isRunTextMode) {
+            // runText 모드
+            const runTextItem = quiz.runText[currentRunTextIndex];
+            content = `
+            <div id="intro" class="intro_wrap">
+                <div class="intro_box">
+                    <p>${runTextItem}</p>
+                    <button class="next_btn blink"><img src="../assets/img/next.png" alt=""></button>
                 </div>
-                `;
-                const quizHTML = `${content}`;
-                quizWrap.innerHTML = quizHTML;
-            }
-            if (quiz) {
-                let content = '';
-                if (isRunTextMode) {
-                    // runText 모드
-                    const runTextItem = quiz.runText[currentRunTextIndex];
-                    content = `
-                    <div id="intro" class="intro_wrap">
-                        <div class="intro_box">
-                            <p>${runTextItem}</p>
-                            <button class="next_btn blink"><img src="../assets/img/next.png" alt=""></button>
-                        </div>
+            </div>
+            `;
+        } else {
+            // Question 모드
+            content = `
+            <div id="choice">
+                <div class="character">
+                    <img src="${quiz.Feel}" alt="">
+                </div>
+                <div class="choice_box">
+                    <p id="questionText">${quiz.Question}</p>
+                    <div class="choice_btn">
+                        <button class="choice_A" id="choiceA">${quiz.Choice[0]}</button>
+                        <button class="choice_B" id="choiceB">${quiz.Choice[1]}</button>
                     </div>
-                    `;
-                } else {
-                    // Question 모드
-                    content = `
-                    <div id="choice">
-                        <div class="character">
-                            <img src="${quiz.Feel}" alt="">
-                        </div>
-                        <div class="choice_box">
-                            <p id="questionText">${quiz.Question}</p>
-                            <div class="choice_btn">
-                                <button class="choice_A" id="choiceA">${quiz.Choice[0]}</button>
-                                <button class="choice_B" id="choiceB">${quiz.Choice[1]}</button>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                }
-                const quizHTML = `${content}`;
-                introWrap.innerHTML = quizHTML;
+                </div>
+            </div>
+            `;
+        }
+        const quizHTML = `${content}`;
+        introWrap.innerHTML = quizHTML;
 
-            }
-        };
+    }
+};
 ```
 4. 정답 확인
 ```
 function checkAnswer(quiz, userChoice) {
 
-            let answer = quiz.Answer; // JSON 파일에서 정답 가져오기
+    let answer = quiz.Answer; // JSON 파일에서 정답 가져오기
 
-            // 사용자의 선택과 정답 비교
-            if (userChoice === answer) {
-                InheaLove += 3;
-                showResult(quiz.choiceGood);
-                console.log(InheaLove);
-            } else {
-                // 오답인 경우
-                InheaLove += 2;
-                showResult(quiz.choiceBad);
-            }
-        }
+    // 사용자의 선택과 정답 비교
+    if (userChoice === answer) {
+        InheaLove += 3;
+        showResult(quiz.choiceGood);
+        console.log(InheaLove);
+    } else {
+        // 오답인 경우
+        InheaLove += 2;
+        showResult(quiz.choiceBad);
+    }
+}
 ```
