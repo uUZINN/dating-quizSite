@@ -1,4 +1,5 @@
 # 2024 연애 시뮬레이션
+![image](https://github.com/uUZINN/dating-quizSite/assets/89904583/933b43af-1dc9-4213-a84d-7896a7fb1040)
 "쓰레기는 쓰레기통에" 라는 웹툰을 소재로 연애 시뮬레이션 퀴즈게임을 제작하였습니다.<br>
 웹툰 내용을 바탕으로 주인공들의 성격을 그대로 반영하였으며,<br>
 직접 json파일을 제작하여 스토리도 색다르게 변경하고 총 4명의 주인공 중에서<br>
@@ -11,4 +12,4 @@
 <br>
 과연 당신의 데이트 점수는?!!<br>
 <br>
-![image](https://github.com/uUZINN/dating-quizSite/assets/89904583/933b43af-1dc9-4213-a84d-7896a7fb1040)
+
