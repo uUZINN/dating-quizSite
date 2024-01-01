@@ -13,6 +13,10 @@
 과연 당신의 데이트 점수는?!!<br>
 <br>
 
+## FIGMA 
+![image](https://github.com/uUZINN/dating-quizSite/assets/89904583/3410cf0b-b24f-49b9-889a-dfec952da925)
+피그마 디자인 보러가기 : https://www.figma.com/file/uhMAfMN50Uhct3KeD1x14V/%EC%97%B0%EC%95%A0-%EC%8B%9C%EB%AE%AC%EB%A0%88%EC%9D%B4%EC%85%98-(%EC%A1%B0%EB%B3%84-%ED%80%B4%EC%A6%88%EA%B2%8C%EC%9E%84)?type=design&node-id=51%3A107&mode=design&t=xLKkgyDEzDs9bwia-1
+
 ## Page-list
 1. 메인페이지<br>
    - 웹툰 로고 사용<br>
@@ -151,3 +155,8 @@ function checkAnswer(quiz, userChoice) {
     }
 }
 ```
+
+## After project...
+- 완벽한 시뮬레이션 게임을 구현하지는 못하였지만, 스토리가 이어지는 부분은 자연스럽게 되었습니다.
+- 평범한 퀴즈 게임이 아니라 웹툰을 소재로 한 시뮬레이션 게임을 제작해 본 것이 신선하고, 재밌는 경험이었습니다.
+- 조원별로 가장 잘하는 부분을 맡아서 분담하게 되었고, 덕분에 팀 내 커뮤니케이션과 분업이 잘 되었습니다.
